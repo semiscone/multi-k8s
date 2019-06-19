@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t semiscone/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run semiscone/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t semiscone/multi-client ./client
+  - docker build -t semiscone/multi-nginx ./nginx
+  - docker build -t semiscone/multi-server ./server
+  - docker build -t semiscone/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push semiscone/multi-client
+  - docker push semiscone/multi-nginx
+  - docker push semiscone/multi-server
+  - docker push semiscone/multi-worker
