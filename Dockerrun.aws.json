@@ -2,7 +2,7 @@
     "AWSEBDockerrunVersion": 2,
     "containerDefinitions":[
         {
-            "name": "clinet",
+            "name": "client",
             "image": "semiscone/multi-client",
             "hostname": "client",
             "essential": false,
