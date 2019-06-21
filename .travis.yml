@@ -20,3 +20,16 @@ after_success:
   - docker push semiscone/multi-nginx
   - docker push semiscone/multi-server
   - docker push semiscone/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: ap-east-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-ap-east-1-022643302964
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
