@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server-deployment
+  name: redis-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      component: server
+      component: redis
   template:
     metadata:
       labels:
-        component: server
+        component: redis
     spec:
       containers:
-      - name: server
-        image: semiscone/multi-server
+      - name: redis
+        image: redis
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 5000
+        - containerPort: 6379
